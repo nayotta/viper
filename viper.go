@@ -204,6 +204,13 @@ func New() *Viper {
 	return v
 }
 
+// NewWithData returns new Viper instance with config data.
+func NewWithData(data map[string]interface{}) *Viper {
+	newv := New()
+	newv.config = data
+	return newv
+}
+
 // Intended for testing, will reset all to default settings.
 // In the public interface for the viper package so applications
 // can use it in their testing as well.
