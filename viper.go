@@ -1608,6 +1608,30 @@ func (v *Viper) AllKeys() []string {
 	return a
 }
 
+func NextKeys() []string { return v.NextKeys() }
+func (v *Viper) NextKeys() []string {
+	m := map[string]bool{}
+	for _, k := range v.AllKeys() {
+		ss := strings.SplitN(k, ".", 2)
+		if len(ss) != 2 {
+			continue
+		}
+		k = ss[0]
+		_, ok := m[k]
+		if ok {
+			continue
+		}
+		m[k] = true
+	}
+
+	a := []string{}
+	for x := range m {
+		a = append(a, x)
+	}
+
+	return a
+}
+
 // flattenAndMergeMap recursively flattens the given map into a map[string]bool
 // of key paths (used as a set, easier to manipulate than a []string):
 // - each path is merged into a single key string, delimited with v.keyDelim (= ".")
